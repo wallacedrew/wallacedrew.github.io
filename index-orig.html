@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drew Wallace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:      #1A1A18;
+      --mid:      #9A9690;
+      --faint:    #E4E2DC;
+      --red:      #C94040;
+      --green:    #3A7D44;
+      --red-bg:   #FDF1F1;
+      --green-bg: #F1F7F2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fff;
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 72px 28px 88px;
+      max-width: 480px;
+      margin: 0 auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--mid); text-decoration: none; transition: color 0.12s; }
+    a:hover { color: var(--ink); }
+    a:focus-visible { outline: 1px solid var(--green); outline-offset: 3px; }
+
+    .name  { font-size: 0.9rem; font-weight: 500; margin-bottom: 4px; }
+    .role  { font-size: 0.72rem; color: var(--mid); margin-bottom: 56px; }
+
+    /* Diff */
+    .diff {
+      border: 1px solid var(--faint);
+      font-size: 0.71rem;
+      line-height: 1.55;
+      margin-bottom: 56px;
+      background: #fafafa;
+    }
+    .dl { display: flex; gap: 10px; padding: 1px 12px; }
+    .dl .m { width: 10px; flex-shrink: 0; text-align: center; user-select: none; }
+    .dl.r { background: var(--red-bg);   color: var(--red);   }
+    .dl.a { background: var(--green-bg); color: var(--green); }
+    .dl.c { color: var(--mid); }
+    .diff-gap { height: 4px; background: #fff; border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .dl { opacity: 0; }
+      .dl.in { animation: fi 0.2s ease forwards; }
+    }
+    @keyframes fi { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Services */
+    .services {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 56px;
+    }
+    .services span { font-size: 0.76rem; color: var(--mid); }
+
+    /* Contact */
+    .contact { display: flex; flex-direction: column; gap: 6px; }
+    .contact a { font-size: 0.76rem; }
+  </style>
+</head>
+<body>
+
+  <p class="name">Drew Wallace</p>
+  <p class="role">staff engineer · legacy · greenfield · agentic systems</p>
+
+  <div class="diff" aria-label="Code before and after refactoring">
+    <div class="dl c"><span class="m"> </span><span>public class OrderService {</span></div>
+    <div class="dl r"><span class="m">−</span><span>  public void process(Map&lt;String,Object&gt; data) {</span></div>
+    <div class="dl r"><span class="m">−</span><span>    if ((Boolean)data.get("paid") &amp;&amp; data.get("items") != null) {</span></div>
+    <div class="dl r"><span class="m">−</span><span>      // TODO: validate, then ship</span></div>
+    <div class="dl r"><span class="m">−</span><span>      doStuff(data);</span></div>
+    <div class="dl r"><span class="m">−</span><span>    }</span></div>
+    <div class="dl r"><span class="m">−</span><span>  }</span></div>
+    <div class="diff-gap"></div>
+    <div class="dl a"><span class="m">+</span><span>  public void fulfillPaidOrder(Order order) {</span></div>
+    <div class="dl a"><span class="m">+</span><span>    order.assertReadyToFulfill();</span></div>
+    <div class="dl a"><span class="m">+</span><span>    inventory.reserve(order.lineItems());</span></div>
+    <div class="dl a"><span class="m">+</span><span>    shipment.dispatch(order);</span></div>
+    <div class="dl a"><span class="m">+</span><span>  }</span></div>
+    <div class="dl c"><span class="m"> </span><span>}</span></div>
+  </div>
+
+  <div class="services">
+    <span>legacy system triage</span>
+    <span>tech debt reduction</span>
+    <span>greenfield system design</span>
+    <span>ai-generated code audit</span>
+    <span>staff-level embed</span>
+  </div>
+
+  <div class="contact">
+    <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a>
+    <a href="https://linkedin.com/in/andrewgwallace" target="_blank" rel="noopener">linkedin.com/in/andrewgwallace</a>
+    <a href="https://twitter.com/refactorfiend" target="_blank" rel="noopener">@refactorfiend</a>
+  </div>
+
+  <script>
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) {
+      document.querySelectorAll('.dl').forEach((el, i) => {
+        setTimeout(() => el.classList.add('in'), 80 + i * 55);
+      });
+    }
+  </script>
+</body>
+</html>

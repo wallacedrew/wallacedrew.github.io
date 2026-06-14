@@ -6,117 +6,342 @@
   <title>Drew Wallace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink:      #1A1A18;
-      --mid:      #9A9690;
-      --faint:    #E4E2DC;
-      --red:      #C94040;
-      --green:    #3A7D44;
-      --red-bg:   #FDF1F1;
-      --green-bg: #F1F7F2;
+      --ink: #000;
+      --paper: #fff;
+      --rule: 6px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body { background: var(--paper); color: var(--ink); }
+
     body {
-      background: #fff;
-      color: var(--ink);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      padding: 72px 28px 88px;
-      max-width: 480px;
-      margin: 0 auto;
+      font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 900;
+      line-height: 1;
       -webkit-font-smoothing: antialiased;
+      padding: 24px 16px 48px;
     }
 
-    a { color: var(--mid); text-decoration: none; transition: color 0.12s; }
-    a:hover { color: var(--ink); }
-    a:focus-visible { outline: 1px solid var(--green); outline-offset: 3px; }
+    @media (min-width: 720px) {
+      body { padding: 64px 24px; }
+    }
 
-    .name  { font-size: 0.9rem; font-weight: 500; margin-bottom: 4px; }
-    .role  { font-size: 0.72rem; color: var(--mid); margin-bottom: 56px; }
+    main {
+      max-width: 420px;
+      margin: 0 auto;
+    }
 
-    /* Diff */
+    /* ─── ID card ──────────────────────────────────── */
+
+    .card {
+      border: var(--rule) solid var(--ink);
+      padding: 22px 20px 20px;
+      margin-bottom: 24px;
+    }
+
+    .name {
+      font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 56px;
+      line-height: 0.92;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+    }
+
+    .card hr {
+      border: 0;
+      border-top: 3px solid var(--ink);
+      margin: 18px 0 14px;
+    }
+
+    .label {
+      display: block;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .meta-row + .meta-row { margin-top: 8px; }
+
+    .meta-row .num {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* ─── Diff ──────────────────────────────────────── */
+
     .diff {
-      border: 1px solid var(--faint);
-      font-size: 0.71rem;
+      border: var(--rule) solid var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .diff-section { padding: 14px 16px 16px; }
+
+    .diff-section.before { border-bottom: var(--rule) solid var(--ink); }
+
+    .diff-section.after {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .diff-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .diff-head .num {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    .diff pre {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 400;
+      font-size: 11.5px;
       line-height: 1.55;
-      margin-bottom: 56px;
-      background: #fafafa;
+      overflow-x: auto;
+      white-space: pre;
     }
-    .dl { display: flex; gap: 10px; padding: 1px 12px; }
-    .dl .m { width: 10px; flex-shrink: 0; text-align: center; user-select: none; }
-    .dl.r { background: var(--red-bg);   color: var(--red);   }
-    .dl.a { background: var(--green-bg); color: var(--green); }
-    .dl.c { color: var(--mid); }
-    .diff-gap { height: 4px; background: #fff; border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint); }
 
-    @media (prefers-reduced-motion: no-preference) {
-      .dl { opacity: 0; }
-      .dl.in { animation: fi 0.2s ease forwards; }
+    /* ─── Capability list ─────────────────────────── */
+
+    .caps {
+      border-top: var(--rule) solid var(--ink);
+      border-bottom: var(--rule) solid var(--ink);
+      margin-bottom: 24px;
     }
-    @keyframes fi { from { opacity: 0; } to { opacity: 1; } }
 
-    /* Services */
-    .services {
+    .caps-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 12px 4px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .caps-head .num {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .caps ol {
+      list-style: none;
+      counter-reset: cap;
+    }
+
+    .caps li {
+      counter-increment: cap;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 14px 4px;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .caps li + li { border-top: 2px solid var(--ink); }
+
+    .caps li::before {
+      content: counter(cap, decimal-leading-zero);
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+      min-width: 22px;
+    }
+
+    /* ─── Primary action ──────────────────────────── */
+
+    .primary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      width: 100%;
+      padding: 22px 20px;
+      background: var(--ink);
+      color: var(--paper);
+      border: var(--rule) solid var(--ink);
+      font-family: 'Arial Black', sans-serif;
+      text-decoration: none;
+      margin-bottom: 14px;
+      transition: transform 0.06s ease;
+    }
+
+    .primary .copy {
       display: flex;
       flex-direction: column;
-      gap: 7px;
-      margin-bottom: 56px;
+      gap: 6px;
+      min-width: 0;
     }
-    .services span { font-size: 0.76rem; color: var(--mid); }
 
-    /* Contact */
-    .contact { display: flex; flex-direction: column; gap: 6px; }
-    .contact a { font-size: 0.76rem; }
+    .primary .copy .lead {
+      font-size: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .primary .copy .addr {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: lowercase;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .primary .arrow {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .primary:active,
+    .secondary a:active { transform: translateY(1px); }
+
+    .primary:focus-visible,
+    .secondary a:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 4px;
+    }
+
+    /* ─── Secondary actions ───────────────────────── */
+
+    .secondary {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .secondary a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-family: 'Arial Black', sans-serif;
+      transition: transform 0.06s ease;
+    }
+
+    .secondary a .lead {
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .secondary a .handle {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: lowercase;
+    }
   </style>
 </head>
 <body>
+  <main>
 
-  <p class="name">Drew Wallace</p>
-  <p class="role">staff engineer · legacy · greenfield · agentic systems</p>
+    <section class="card" aria-label="Identification">
+      <h1 class="name">Drew<br />Wallace</h1>
+      <hr />
+      <div class="meta-row">
+        <span class="label">Role</span>
+        <span class="label">Staff Engineer</span>
+      </div>
+      <div class="meta-row">
+        <span class="label">Scope</span>
+        <span class="num">LEGACY / GREENFIELD / AGENTIC</span>
+      </div>
+    </section>
 
-  <div class="diff" aria-label="Code before and after refactoring">
-    <div class="dl c"><span class="m"> </span><span>public class OrderService {</span></div>
-    <div class="dl r"><span class="m">−</span><span>  public void process(Map&lt;String,Object&gt; data) {</span></div>
-    <div class="dl r"><span class="m">−</span><span>    if ((Boolean)data.get("paid") &amp;&amp; data.get("items") != null) {</span></div>
-    <div class="dl r"><span class="m">−</span><span>      // TODO: validate, then ship</span></div>
-    <div class="dl r"><span class="m">−</span><span>      doStuff(data);</span></div>
-    <div class="dl r"><span class="m">−</span><span>    }</span></div>
-    <div class="dl r"><span class="m">−</span><span>  }</span></div>
-    <div class="diff-gap"></div>
-    <div class="dl a"><span class="m">+</span><span>  public void fulfillPaidOrder(Order order) {</span></div>
-    <div class="dl a"><span class="m">+</span><span>    order.assertReadyToFulfill();</span></div>
-    <div class="dl a"><span class="m">+</span><span>    inventory.reserve(order.lineItems());</span></div>
-    <div class="dl a"><span class="m">+</span><span>    shipment.dispatch(order);</span></div>
-    <div class="dl a"><span class="m">+</span><span>  }</span></div>
-    <div class="dl c"><span class="m"> </span><span>}</span></div>
-  </div>
+    <section class="diff" aria-label="Refactor specimen">
+      <div class="diff-section before">
+        <div class="diff-head">
+          <span class="label">Before</span>
+          <span class="num">07 LOC</span>
+        </div>
+<pre>public void process(Map data) {
+  if ((Boolean)data.get("paid")
+      &amp;&amp; data.get("items") != null) {
+    // TODO: validate
+    doStuff(data);
+  }
+}</pre>
+      </div>
+      <div class="diff-section after">
+        <div class="diff-head">
+          <span class="label">After</span>
+          <span class="num">05 LOC</span>
+        </div>
+<pre>fulfillPaidOrder(Order o) {
+  o.assertReadyToFulfill();
+  inventory.reserve(o.lineItems());
+  shipment.dispatch(o);
+}</pre>
+      </div>
+    </section>
 
-  <div class="services">
-    <span>legacy system triage</span>
-    <span>tech debt reduction</span>
-    <span>greenfield system design</span>
-    <span>ai-generated code audit</span>
-    <span>staff-level embed</span>
-  </div>
+    <section class="caps" aria-label="Capabilities">
+      <div class="caps-head">
+        <span class="label">Capabilities</span>
+        <span class="num">05</span>
+      </div>
+      <ol>
+        <li>Legacy System Triage</li>
+        <li>Tech Debt Reduction</li>
+        <li>Greenfield System Design</li>
+        <li>AI-Generated Code Audit</li>
+        <li>Staff-Level Embed</li>
+      </ol>
+    </section>
 
-  <div class="contact">
-    <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a>
-    <a href="https://linkedin.com/in/andrewgwallace" target="_blank" rel="noopener">linkedin.com/in/andrewgwallace</a>
-    <a href="https://twitter.com/refactorfiend" target="_blank" rel="noopener">@refactorfiend</a>
-  </div>
+    <a class="primary" href="mailto:contact@refactorplug.com">
+      <span class="copy">
+        <span class="lead">Open Mail</span>
+        <span class="addr">contact@refactorplug.com</span>
+      </span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
 
-  <script>
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduced) {
-      document.querySelectorAll('.dl').forEach((el, i) => {
-        setTimeout(() => el.classList.add('in'), 80 + i * 55);
-      });
-    }
-  </script>
+    <nav class="secondary" aria-label="Other channels">
+      <a href="https://linkedin.com/in/andrewgwallace" target="_blank" rel="noopener">
+        <span class="lead">LinkedIn</span>
+        <span class="handle">andrewgwallace</span>
+      </a>
+      <a href="https://twitter.com/refactorfiend" target="_blank" rel="noopener">
+        <span class="lead">Twitter</span>
+        <span class="handle">@refactorfiend</span>
+      </a>
+    </nav>
+
+  </main>
 </body>
 </html>
