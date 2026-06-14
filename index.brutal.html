@@ -81,11 +81,46 @@
       letter-spacing: 1px;
     }
 
+    /* ─── Tagline ──────────────────────────────────── */
+
+    .tagline {
+      border: var(--rule) solid var(--ink);
+      padding: 24px 20px 26px;
+      margin-bottom: 24px;
+    }
+
+    .tagline .label {
+      margin-bottom: 14px;
+    }
+
+    .tagline h2 {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 36px;
+      line-height: 0.92;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+    }
+
     /* ─── Diff ──────────────────────────────────────── */
 
     .diff {
       border: var(--rule) solid var(--ink);
       margin-bottom: 24px;
+    }
+
+    .diff-file {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 14px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .diff-file .num {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
     }
 
     .diff-section { padding: 14px 16px 16px; }
@@ -120,7 +155,24 @@
       white-space: pre;
     }
 
-    /* ─── Capability list ─────────────────────────── */
+    /* ─── Bio ──────────────────────────────────────── */
+
+    .bio {
+      border: var(--rule) solid var(--ink);
+      padding: 16px 18px 18px;
+      margin-bottom: 24px;
+    }
+
+    .bio .label { margin-bottom: 10px; }
+
+    .bio p {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 400;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    /* ─── Capabilities ─────────────────────────────── */
 
     .caps {
       border-top: var(--rule) solid var(--ink);
@@ -150,25 +202,127 @@
 
     .caps li {
       counter-increment: cap;
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      padding: 14px 4px;
-      font-family: 'Arial Black', sans-serif;
-      font-size: 13px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      column-gap: 12px;
+      row-gap: 6px;
+      padding: 16px 4px;
     }
 
     .caps li + li { border-top: 2px solid var(--ink); }
 
     .caps li::before {
       content: counter(cap, decimal-leading-zero);
+      grid-row: 1;
+      grid-column: 1;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 1px;
-      min-width: 22px;
+      align-self: baseline;
+      padding-top: 2px;
+    }
+
+    .cap-title {
+      grid-row: 1;
+      grid-column: 2;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      align-self: baseline;
+    }
+
+    .cap-desc {
+      grid-row: 2;
+      grid-column: 2;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 400;
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+
+    /* ─── Credentials ──────────────────────────────── */
+
+    .creds {
+      border: var(--rule) solid var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .creds-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 12px 14px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .creds-head .num {
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .creds ul {
+      list-style: none;
+      padding: 0 14px;
+    }
+
+    .creds li {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) 1.4fr;
+      gap: 14px;
+      padding: 12px 0;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+
+    .creds li + li { border-top: 2px solid var(--ink); }
+
+    .creds .org {
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .creds .role { font-weight: 400; }
+
+    /* ─── Kicker (inverted) ────────────────────────── */
+
+    .kicker {
+      background: var(--ink);
+      color: var(--paper);
+      border: var(--rule) solid var(--ink);
+      padding: 24px 20px 26px;
+      margin-bottom: 24px;
+    }
+
+    .kicker .label { margin-bottom: 14px; }
+
+    .kicker p {
+      font-family: 'Arial Black', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ─── Contact preamble ─────────────────────────── */
+
+    .preamble {
+      display: block;
+      padding: 12px 0;
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      margin-bottom: 14px;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      line-height: 1.35;
     }
 
     /* ─── Primary action ──────────────────────────── */
@@ -264,6 +418,32 @@
       letter-spacing: 0.5px;
       text-transform: lowercase;
     }
+
+    /* ─── Footer ──────────────────────────────────── */
+
+    footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 3px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    footer a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 1px;
+    }
   </style>
 </head>
 <body>
@@ -282,17 +462,30 @@
       </div>
     </section>
 
+    <section class="tagline" aria-label="Positioning">
+      <span class="label">Brief</span>
+      <h2>Twenty-Year<br />Codebases.<br />Safe To Touch<br />Again.</h2>
+    </section>
+
     <section class="diff" aria-label="Refactor specimen">
+      <div class="diff-file">
+        <span class="label">File</span>
+        <span class="num">OrderService.java</span>
+      </div>
       <div class="diff-section before">
         <div class="diff-head">
           <span class="label">Before</span>
-          <span class="num">07 LOC</span>
+          <span class="num">11 LOC</span>
         </div>
-<pre>public void process(Map data) {
-  if ((Boolean)data.get("paid")
-      &amp;&amp; data.get("items") != null) {
-    // TODO: validate
-    doStuff(data);
+<pre>public void process(Map&lt;String,Object&gt; d) {
+  Boolean paid = (Boolean) d.get("paid");
+  String status = (String) d.get("status");
+  List items = (List) d.get("items");
+  if (paid != null &amp;&amp; paid
+      &amp;&amp; "confirmed".equals(status)
+      &amp;&amp; items != null &amp;&amp; items.size() &gt; 0) {
+    // TODO: validate, then ship
+    doStuff(d);
   }
 }</pre>
       </div>
@@ -301,12 +494,17 @@
           <span class="label">After</span>
           <span class="num">05 LOC</span>
         </div>
-<pre>fulfillPaidOrder(Order o) {
-  o.assertReadyToFulfill();
-  inventory.reserve(o.lineItems());
-  shipment.dispatch(o);
+<pre>public void fulfillPaidOrder(Order order) {
+  order.assertReadyToFulfill();
+  inventory.reserve(order.lineItems());
+  shipment.dispatch(order);
 }</pre>
       </div>
+    </section>
+
+    <section class="bio" aria-label="Bio">
+      <span class="label">Bio</span>
+      <p>Java for 15 years. Most of it inside enterprise systems that were never supposed to last this long. 2000+ class codebases your team is scared to touch. Finds the seams nobody documented and makes it safe to move &mdash; without a rewrite.</p>
     </section>
 
     <section class="caps" aria-label="Capabilities">
@@ -315,13 +513,56 @@
         <span class="num">05</span>
       </div>
       <ol>
-        <li>Legacy System Triage</li>
-        <li>Tech Debt Reduction</li>
-        <li>Greenfield System Design</li>
-        <li>AI-Generated Code Audit</li>
-        <li>Staff-Level Embed</li>
+        <li>
+          <span class="cap-title">Legacy System Triage</span>
+          <p class="cap-desc">Characterization tests, seam-finding, dependency mapping. Tells you what is load-bearing, what is dead weight, and what the next safe move is.</p>
+        </li>
+        <li>
+          <span class="cap-title">Tech Debt Reduction</span>
+          <p class="cap-desc">Incremental, semantics-preserving refactoring that ships alongside real features. No stopping the clock on delivery.</p>
+        </li>
+        <li>
+          <span class="cap-title">Greenfield System Design</span>
+          <p class="cap-desc">Domain model first, ports at the edges, pure core. Slices ship end-to-end from day one, never a layer in isolation.</p>
+        </li>
+        <li>
+          <span class="cap-title">AI-Generated Code Audit</span>
+          <p class="cap-desc">Reviews AI-generated output for structural debt, hidden coupling, and dead code. The intention-free work that ships today and calcifies into tomorrow&rsquo;s legacy problem.</p>
+        </li>
+        <li>
+          <span class="cap-title">Staff-Level Embed</span>
+          <p class="cap-desc">Short-term staff engineer inside the team. Works in the codebase, not above it. Leaves the system safer to change and the team more confident changing it.</p>
+        </li>
       </ol>
     </section>
+
+    <section class="creds" aria-label="Credentials">
+      <div class="creds-head">
+        <span class="label">Track Record</span>
+        <span class="num">03</span>
+      </div>
+      <ul>
+        <li>
+          <span class="org">Accenture</span>
+          <span class="role">Enterprise Consulting</span>
+        </li>
+        <li>
+          <span class="org">Industrial Logic</span>
+          <span class="role">XP Practitioner &middot; 02 YR</span>
+        </li>
+        <li>
+          <span class="org">Java</span>
+          <span class="role">15 YR &middot; Fintech &middot; Healthcare &middot; SaaS</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="kicker" aria-label="Operating principle">
+      <span class="label">Principle</span>
+      <p>Put the business<br />in the code.<br />Let the code teach<br />about the business.</p>
+    </section>
+
+    <span class="preamble">Talk About The Codebase Your Team Is Scared To Touch</span>
 
     <a class="primary" href="mailto:contact@refactorplug.com">
       <span class="copy">
@@ -342,6 +583,15 @@
       </a>
     </nav>
 
+    <footer>
+      <span>&copy; <span id="yr">2026</span> Drew Wallace</span>
+      <a href="https://refactoringintheloop.com" target="_blank" rel="noopener">refactoringintheloop.com</a>
+    </footer>
+
   </main>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
