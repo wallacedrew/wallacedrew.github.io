@@ -10,7 +10,8 @@
   <style>
     :root {
       --ink:      #1A1A18;
-      --mid:      #9A9690;
+      --mid:      #4A4744;
+      --mute:     #847F78;
       --faint:    #E4E2DC;
       --red:      #C94040;
       --green:    #3A7D44;
@@ -60,7 +61,7 @@
     .diff-head {
       padding: 6px 12px;
       font-size: 0.65rem;
-      color: var(--mid);
+      color: var(--mute);
       border-bottom: 1px solid var(--faint);
       background: #f4f3f0;
     }
@@ -68,7 +69,7 @@
     .dl .m { width: 10px; flex-shrink: 0; text-align: center; user-select: none; }
     .dl.r { background: var(--red-bg);   color: var(--red);   }
     .dl.a { background: var(--green-bg); color: var(--green); }
-    .dl.c { color: var(--mid); }
+    .dl.c { color: var(--mute); }
     .diff-gap { height: 4px; background: #fff; border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint); }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -93,7 +94,7 @@
     /* Section heading */
     .sec-head {
       font-size: 0.65rem;
-      color: var(--mid);
+      color: var(--mute);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 14px;
@@ -175,9 +176,10 @@
       gap: 12px;
       flex-wrap: wrap;
       font-size: 0.65rem;
-      color: var(--mid);
+      color: var(--mute);
     }
-    footer a { font-size: 0.65rem; }
+    footer a { font-size: 0.65rem; color: var(--mute); }
+    footer a:hover { color: var(--ink); }
   </style>
 </head>
 <body>
