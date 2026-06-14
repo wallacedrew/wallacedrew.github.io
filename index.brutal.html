@@ -129,20 +129,27 @@
 
     .diff-body {
       padding: 10px 0;
+      overflow-x: auto;
+    }
+
+    .diff-rows {
+      display: inline-block;
+      min-width: 100%;
+      vertical-align: top;
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
       font-weight: 400;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.55;
     }
 
     .dl {
       display: flex;
-      gap: 10px;
-      padding: 2px 16px;
+      gap: 8px;
+      padding: 2px 12px;
     }
 
     .dl .m {
-      width: 12px;
+      width: 10px;
       flex-shrink: 0;
       text-align: center;
       user-select: none;
@@ -476,25 +483,27 @@
         <span class="num">OrderService.java &middot; &minus;11 / +05</span>
       </div>
       <div class="diff-body">
-        <div class="dl c"><span class="m"> </span><span>public class OrderService {</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>  public void process(Map&lt;String,Object&gt; d) {</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>    Boolean paid = (Boolean) d.get("paid");</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>    String status = (String) d.get("status");</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>    List items = (List) d.get("items");</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>    if (paid != null &amp;&amp; paid</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>        &amp;&amp; "confirmed".equals(status)</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>        &amp;&amp; items != null &amp;&amp; items.size() &gt; 0) {</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>      // TODO: validate, then ship</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>      doStuff(d);</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>    }</span></div>
-        <div class="dl r"><span class="m">&minus;</span><span>  }</span></div>
-        <div class="diff-gap"></div>
-        <div class="dl a"><span class="m">+</span><span>  public void fulfillPaidOrder(Order order) {</span></div>
-        <div class="dl a"><span class="m">+</span><span>    order.assertReadyToFulfill();</span></div>
-        <div class="dl a"><span class="m">+</span><span>    inventory.reserve(order.lineItems());</span></div>
-        <div class="dl a"><span class="m">+</span><span>    shipment.dispatch(order);</span></div>
-        <div class="dl a"><span class="m">+</span><span>  }</span></div>
-        <div class="dl c"><span class="m"> </span><span>}</span></div>
+        <div class="diff-rows">
+          <div class="dl c"><span class="m"> </span><span>public class OrderService {</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>  public void process(Map&lt;String,Object&gt; d) {</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>    Boolean paid = (Boolean) d.get("paid");</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>    String status = (String) d.get("status");</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>    List items = (List) d.get("items");</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>    if (paid != null &amp;&amp; paid</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>        &amp;&amp; "confirmed".equals(status)</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>        &amp;&amp; items != null &amp;&amp; items.size() &gt; 0) {</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>      // TODO: validate, then ship</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>      doStuff(d);</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>    }</span></div>
+          <div class="dl r"><span class="m">&minus;</span><span>  }</span></div>
+          <div class="diff-gap"></div>
+          <div class="dl a"><span class="m">+</span><span>  public void fulfillPaidOrder(Order order) {</span></div>
+          <div class="dl a"><span class="m">+</span><span>    order.assertReadyToFulfill();</span></div>
+          <div class="dl a"><span class="m">+</span><span>    inventory.reserve(order.lineItems());</span></div>
+          <div class="dl a"><span class="m">+</span><span>    shipment.dispatch(order);</span></div>
+          <div class="dl a"><span class="m">+</span><span>  }</span></div>
+          <div class="dl c"><span class="m"> </span><span>}</span></div>
+        </div>
       </div>
     </section>
 
