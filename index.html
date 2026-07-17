@@ -1,298 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drew Wallace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codebase Rescue &amp; Agent Governance</title>
   <style>
     :root {
-      --ink:      #1A1A18;
-      --mid:      #4A4744;
-      --mute:     #847F78;
-      --faint:    #E4E2DC;
-      --red:      #C94040;
-      --green:    #3A7D44;
-      --red-bg:   #FDF1F1;
-      --green-bg: #F1F7F2;
+      --paper: #FAFAF9;
+      --ink: #111111;
+      --muted: #6B6B68;
+      --rule: #E5E5E3;
+      --measure: 34rem;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { font-size: clamp(16px, 14px + 0.7vw, 24px); }
-
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
     body {
-      background: #fff;
+      margin: 0;
+      background: var(--paper);
       color: var(--ink);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.1875rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 1.25rem;
       line-height: 1.6;
-      padding: 4.5rem 1.75rem 3rem;
-      max-width: 40rem;
-      margin: 0 auto;
       -webkit-font-smoothing: antialiased;
     }
-
-    a { color: var(--mid); text-decoration: none; transition: color 0.12s; }
-    a:hover { color: var(--ink); }
-    a:focus-visible { outline: 1px solid var(--green); outline-offset: 3px; }
-
-    .name  { font-size: 1rem; font-weight: 500; margin-bottom: 0.25rem; }
-    .role  { font-size: 0.85rem; color: var(--mid); margin-bottom: 3rem; }
-
-    /* Tagline */
-    .tagline {
-      font-size: 1.75rem;
-      font-weight: 500;
-      line-height: 1.3;
-      letter-spacing: -0.02em;
-      max-width: 26ch;
-      margin-bottom: 3.5rem;
+    main {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 5rem 1.5rem 6rem;
+      border-left: 1px solid var(--rule);
     }
-
-    /* Diff */
-    .diff {
-      border: 1px solid var(--faint);
-      font-size: 0.85rem;
-      line-height: 1.55;
-      margin-bottom: 3rem;
-      background: #fafafa;
+    @media (min-width: 60rem) {
+      main {
+        max-width: calc(var(--measure) + 4rem);
+        padding-left: 4rem;
+      }
     }
-    .diff-head {
-      padding: 0.5rem 0.875rem;
-      font-size: 0.75rem;
-      color: var(--mute);
-      border-bottom: 1px solid var(--faint);
-      background: #f4f3f0;
+    section { margin: 0 0 5rem; }
+    section:last-of-type { margin-bottom: 0; }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: 2.25rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.25rem;
+      max-width: 28rem;
     }
-    .diff-body { overflow-x: auto; }
-    .diff-rows { display: inline-block; min-width: 100%; vertical-align: top; }
-    .dl { display: flex; gap: 0.625rem; padding: 0.0625rem 0.75rem; }
-    .dl .m { width: 0.625rem; flex-shrink: 0; text-align: center; user-select: none; }
-    .dl > span:last-child { white-space: pre; }
-    .dl.r { background: var(--red-bg);   color: var(--red);   }
-    .dl.a { background: var(--green-bg); color: var(--green); }
-    .dl.c { color: var(--mute); }
-    .diff-gap { height: 0.25rem; background: #fff; border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint); }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .dl { opacity: 0; }
-      .dl.in { animation: fi 0.2s ease forwards; }
+    @media (min-width: 40rem) {
+      h1 { font-size: 3rem; }
     }
-    @keyframes fi { from { opacity: 0; } to { opacity: 1; } }
-
-    /* Bio */
-    .bio {
-      font-size: 1rem;
-      color: var(--mid);
-      max-width: 56ch;
-      line-height: 1.65;
-      margin-bottom: 3rem;
-    }
-    .bio strong {
-      color: var(--ink);
-      font-weight: 500;
-    }
-
-    /* Section heading */
-    .sec-head {
-      font-size: 0.78rem;
-      color: var(--mute);
-      letter-spacing: 0.08em;
+    h2 {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
     }
-
-    /* Services with descriptions */
-    .services {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+    p { margin: 0 0 1.25rem; max-width: var(--measure); }
+    p:last-child { margin-bottom: 0; }
+    .who {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      margin: 0;
     }
-    .services .item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
+    .lead { font-size: 1.375rem; }
+    strong { font-weight: 600; }
+    em {
+      font-style: normal;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
     }
-    .services .title {
-      font-size: 1rem;
-      font-weight: 500;
+    ul {
+      margin: 0 0 1.25rem;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      margin-bottom: 0.75rem;
+      padding-left: 1.25rem;
+      text-indent: -1.25rem;
+    }
+    li::before {
+      content: "— ";
+      color: var(--muted);
+    }
+    .phase {
+      margin-bottom: 2.5rem;
+    }
+    .phase:last-child { margin-bottom: 0; }
+    .phase-weeks {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.0625rem;
+      color: var(--muted);
+      margin: 0 0 0.375rem;
+    }
+    .phase-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 0 0.625rem;
+    }
+    .refuse li::before {
+      content: "\00d7 ";
+      color: var(--muted);
+    }
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+    }
+    a:hover { color: var(--muted); border-color: var(--muted); }
+    a:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-bottom-color: transparent;
+    }
+    .cta {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 3rem 0;
+    }
+    .cta-terms {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      margin: 0 0 1.25rem;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.875rem 1.75rem;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 1.0625rem;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+    }
+    .button:hover {
+      background: var(--paper);
       color: var(--ink);
     }
-    .services .desc {
-      font-size: 0.95rem;
-      color: var(--mid);
-      max-width: 56ch;
-      line-height: 1.6;
-    }
-
-    /* Credentials */
-    .creds {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5625rem;
-      margin-bottom: 3rem;
-    }
-    .creds .row {
-      display: flex;
-      gap: 1.25rem;
-      font-size: 0.95rem;
-    }
-    .creds .org {
-      color: var(--ink);
-      width: 10.5rem;
-      flex-shrink: 0;
-    }
-    .creds .role-text { color: var(--mid); min-width: 0; }
-
-    /* Kicker */
-    .kicker {
-      font-size: 1.35rem;
-      color: var(--ink);
-      border-left: 0.125rem solid var(--faint);
-      padding: 0.5rem 0 0.5rem 1.125rem;
-      margin-bottom: 3.5rem;
-      max-width: 44ch;
-      line-height: 1.45;
-    }
-
-    /* Contact */
-    .contact-head {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--ink);
-      max-width: 44ch;
-      line-height: 1.45;
-      margin-bottom: 1.125rem;
-    }
-    .contact { display: flex; flex-direction: column; gap: 0.5rem; }
-    .contact a { font-size: 0.95rem; }
-
-    /* Footer */
     footer {
-      margin-top: 4rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--faint);
-      display: flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: var(--mute);
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 1rem;
+      color: var(--muted);
     }
-    footer a { font-size: 0.78rem; color: var(--mute); }
-    footer a:hover { color: var(--ink); }
+    footer a { color: var(--muted); border-color: var(--rule); }
   </style>
 </head>
 <body>
+<main>
+  <section>
+    <h1>your code works. nobody knows why.</h1>
+    <p class="who">rasiim kyan &middot; fractional staff engineer</p>
+  </section>
 
-  <p class="name">Drew Wallace</p>
-  <p class="role">staff engineer · legacy · greenfield · agentic systems</p>
+  <section>
+    <h2>the room</h2>
+    <p class="lead">you put coding agents on the team about a year ago. output tripled. review didnt.</p>
+    <p>now nobody can say what the system does. the tests pass and assert nothing. every change breaks something nobody saw coming.</p>
+    <p>your best engineers are quietly interviewing.</p>
+  </section>
 
-  <p class="tagline">twenty-year codebases. safe to touch again.</p>
+  <section>
+    <h2>what it costs to wait</h2>
+    <p>the rewrite talk starts around month twenty. thats two million dollars and a year of shipping nothing.</p>
+    <p>a staff engineer who could stop it costs <strong>$350k fully loaded</strong>. you wont have one seated for four months.</p>
+    <p>im cheaper. im here in a week. and <em>i leave</em>.</p>
+  </section>
 
-  <div class="diff" aria-label="Code before and after refactoring">
-    <div class="diff-head">OrderService.java</div>
-    <div class="diff-body">
-      <div class="diff-rows">
-        <div class="dl c"><span class="m"> </span><span>public class OrderService {</span></div>
-        <div class="dl r"><span class="m">−</span><span>  public void process(Map&lt;String,Object&gt; d) {</span></div>
-        <div class="dl r"><span class="m">−</span><span>    Boolean paid = (Boolean) d.get("paid");</span></div>
-        <div class="dl r"><span class="m">−</span><span>    String status = (String) d.get("status");</span></div>
-        <div class="dl r"><span class="m">−</span><span>    List items = (List) d.get("items");</span></div>
-        <div class="dl r"><span class="m">−</span><span>    if (paid != null &amp;&amp; paid</span></div>
-        <div class="dl r"><span class="m">−</span><span>        &amp;&amp; "confirmed".equals(status)</span></div>
-        <div class="dl r"><span class="m">−</span><span>        &amp;&amp; items != null &amp;&amp; items.size() &gt; 0) {</span></div>
-        <div class="dl r"><span class="m">−</span><span>      // TODO: validate, then ship</span></div>
-        <div class="dl r"><span class="m">−</span><span>      doStuff(d);</span></div>
-        <div class="dl r"><span class="m">−</span><span>    }</span></div>
-        <div class="dl r"><span class="m">−</span><span>  }</span></div>
-        <div class="diff-gap"></div>
-        <div class="dl a"><span class="m">+</span><span>  public void fulfillPaidOrder(Order order) {</span></div>
-        <div class="dl a"><span class="m">+</span><span>    order.assertReadyToFulfill();</span></div>
-        <div class="dl a"><span class="m">+</span><span>    inventory.reserve(order.lineItems());</span></div>
-        <div class="dl a"><span class="m">+</span><span>    shipment.dispatch(order);</span></div>
-        <div class="dl a"><span class="m">+</span><span>  }</span></div>
-        <div class="dl c"><span class="m"> </span><span>}</span></div>
-      </div>
+  <section>
+    <h2>the engagement</h2>
+    <div class="phase">
+      <p class="phase-weeks">weeks 1&ndash;2</p>
+      <h3 class="phase-name">diagnosis</h3>
+      <p>characterization tests on the highest-churn, least-understood modules. what the system actually does, not what the docs say.</p>
+      <p><strong>you get:</strong> a legibility map. what a human can still read, and what has gone write-only.</p>
     </div>
-  </div>
+    <div class="phase">
+      <p class="phase-weeks">weeks 3&ndash;8</p>
+      <h3 class="phase-name">stabilization</h3>
+      <p>seams, not rewrites. boundaries around the worst parts. real assertions under the fake suite. you can change one thing without breaking three.</p>
+    </div>
+    <div class="phase">
+      <p class="phase-weeks">weeks 9&ndash;16</p>
+      <h3 class="phase-name">governance</h3>
+      <p>this is the real work. CLAUDE.md as the rulebook. fitness functions in ci. a delegability rating on every module. a review rubric that catches problems before merge.</p>
+      <p>this is what keeps it from happening again.</p>
+    </div>
+    <div class="phase">
+      <p class="phase-weeks">weeks 17&ndash;24</p>
+      <h3 class="phase-name">transfer</h3>
+      <p>your engineers own it. i go. the retainer turns into advisory or ends clean.</p>
+    </div>
+  </section>
 
-  <p class="bio">
-    java for 15 years. most of it inside enterprise systems that were never
-    supposed to last this long. 2000+ class codebases your team is scared
-    to touch. finds the seams nobody documented and makes it safe to move
-    &mdash; without a rewrite.
-  </p>
+  <section>
+    <h2>what i turn down</h2>
+    <ul class="refuse">
+      <li>greenfield</li>
+      <li>staff augmentation</li>
+      <li>"just help us ship faster"</li>
+      <li>anything measured only in output</li>
+    </ul>
+    <p>none of that is wrong. its just not the work i take.</p>
+  </section>
 
-  <p class="sec-head">capabilities · 05</p>
-  <div class="services">
-    <div class="item">
-      <span class="title">legacy system triage</span>
-      <span class="desc">characterization tests, seam-finding, dependency mapping. tells you what is load-bearing, what is dead weight, and what the next safe move is.</span>
-    </div>
-    <div class="item">
-      <span class="title">tech debt reduction</span>
-      <span class="desc">incremental, semantics-preserving refactoring that ships alongside real features. no stopping the clock on delivery.</span>
-    </div>
-    <div class="item">
-      <span class="title">greenfield system design</span>
-      <span class="desc">domain model first, ports at the edges, pure core. slices ship end-to-end from day one, never a layer in isolation.</span>
-    </div>
-    <div class="item">
-      <span class="title">ai-generated code audit</span>
-      <span class="desc">reviews ai-generated output for structural debt, hidden coupling, and dead code. the intention-free work that ships today and calcifies into tomorrow&rsquo;s legacy problem.</span>
-    </div>
-    <div class="item">
-      <span class="title">staff-level embed</span>
-      <span class="desc">short-term staff engineer inside the team. works in the codebase, not above it. leaves the system safer to change and the team more confident changing it.</span>
-    </div>
-  </div>
+  <section>
+    <h2>proof of work</h2>
+    <p>no logos. just the thinking.</p>
+    <ul>
+      <li><a href="https://refactoringintheloop.com">refactoringintheloop.com</a> &mdash; the whole catalog. fowler smells and refactorings, kerievsky paths, gof patterns, each one rated for what an agent can be trusted to do.</li>
+      <li><a href="/legibility-map">a legibility map</a> &mdash; anonymized, from a real job. this is what week two produces.</li>
+    </ul>
+  </section>
 
-  <p class="sec-head">track record</p>
-  <div class="creds">
-    <div class="row">
-      <span class="org">accenture</span>
-      <span class="role-text">enterprise consulting</span>
-    </div>
-    <div class="row">
-      <span class="org">industrial logic</span>
-      <span class="role-text">xp practitioner</span>
-    </div>
-    <div class="row">
-      <span class="org">java</span>
-      <span class="role-text">15 yr · fintech · healthcare · saas</span>
-    </div>
-  </div>
-
-  <p class="kicker">
-    put the business in the code. let the code teach about the business.
-  </p>
-
-  <p class="contact-head">talk about the codebase your team is scared to touch.</p>
-  <div class="contact">
-    <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a>
-    <a href="https://linkedin.com/in/andrewgwallace" target="_blank" rel="noopener">linkedin.com/in/andrewgwallace</a>
-    <a href="https://twitter.com/refactorfiend" target="_blank" rel="noopener">@refactorfiend</a>
-  </div>
+  <section class="cta">
+    <h2>start with the diagnosis</h2>
+    <p class="cta-terms">two weeks. you keep the map either way.</p>
+    <p>two weeks tells you whats actually in there. want the rest, we talk. dont, you still know where you stand and youve got the artifact to show your board.</p>
+    <p>two clients at a time, six months each. the diagnosis says if youre one of them.</p>
+    <p><a class="button" href="mailto:contact@refactorplug.com?subject=diagnosis">book the diagnosis</a></p>
+  </section>
 
   <footer>
-    <span>&copy; <span id="yr">2026</span> drew wallace</span>
-    <a href="https://refactoringintheloop.com" target="_blank" rel="noopener">refactoringintheloop.com</a>
+    <p>rasiim kyan &middot; twenty years of xp, refactoring, and evolutionary design &middot; <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a></p>
   </footer>
-
-  <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduced) {
-      document.querySelectorAll('.dl').forEach((el, i) => {
-        setTimeout(() => el.classList.add('in'), 80 + i * 45);
-      });
-    }
-  </script>
+</main>
 </body>
 </html>

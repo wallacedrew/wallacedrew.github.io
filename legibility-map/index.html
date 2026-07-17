@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legibility Map</title>
+  <style>
+    :root {
+      --paper: #FAFAF9;
+      --ink: #111111;
+      --muted: #6B6B68;
+      --rule: #E5E5E3;
+      --measure: 34rem;
+      --wide: 48rem;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      max-width: var(--wide);
+      margin: 0 auto;
+      padding: 5rem 1.5rem 6rem;
+      border-left: 1px solid var(--rule);
+    }
+    @media (min-width: 60rem) {
+      main {
+        max-width: calc(var(--wide) + 4rem);
+        padding-left: 4rem;
+      }
+    }
+    section { margin: 0 0 5rem; }
+    section:last-of-type { margin-bottom: 0; }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: 2.25rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.25rem;
+      max-width: 28rem;
+    }
+    @media (min-width: 40rem) {
+      h1 { font-size: 3rem; }
+    }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 0 1rem;
+    }
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.1875rem;
+      font-weight: 400;
+      margin: 0 0 0.375rem;
+    }
+    p { margin: 0 0 1.25rem; max-width: var(--measure); }
+    p:last-child { margin-bottom: 0; }
+    .who {
+      color: var(--muted);
+      font-size: 1.0625rem;
+      margin: 0 0 1.5rem;
+    }
+    strong { font-weight: 600; }
+    .kicker {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+
+    /* Table */
+    .table-scroll { overflow-x: auto; margin: 0 0 1.5rem; }
+    table {
+      width: 100%;
+      max-width: var(--wide);
+      border-collapse: collapse;
+      font-size: 1.0625rem;
+      line-height: 1.45;
+    }
+    caption {
+      text-align: left;
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-bottom: 0.75rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.625rem 0.75rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    td.module { white-space: normal; }
+    th {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--ink);
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9375rem;
+    }
+    .grade { color: var(--muted); }
+
+    /* Quadrant */
+    .quadrant {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: var(--wide);
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+      margin: 0 0 1rem;
+    }
+    .cell {
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 1.25rem 1.125rem;
+      min-height: 8.5rem;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .cell .coord {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+    .cell p { font-size: 1.0625rem; max-width: none; margin: 0; }
+    .cell.danger { background: #F3F1F0; }
+    .axis {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      max-width: var(--wide);
+      margin: 0 0 1.5rem;
+    }
+
+    em {
+      font-style: normal;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+    }
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+    }
+    a:hover { color: var(--muted); border-color: var(--muted); }
+    a:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-bottom-color: transparent;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); border-color: var(--rule); }
+  </style>
+</head>
+<body>
+<main>
+  <section>
+    <p class="kicker">week two</p>
+    <h1>legibility map</h1>
+    <p class="who">anonymized, from a real engagement. this is what week two produces.</p>
+    <p>a legibility map answers one question for every part of a system: can a person still reason about this, or has it gone write-only &mdash; code that only ever gets appended to, cus nobody can safely read whats already there.</p>
+    <p>two measurements per module. how often it changes, pulled from the last quarter of git history. and how well anyone still understands it, scored from characterization tests and reading sessions with the people who own it.</p>
+  </section>
+
+  <section>
+    <h2>module inventory</h2>
+    <div class="table-scroll">
+      <table>
+        <caption>eight highest-traffic modules. churn is commits touching the module last quarter. comprehension is a three-level read: legible, thin, or opaque.</caption>
+        <thead>
+          <tr>
+            <th scope="col">module</th>
+            <th scope="col">churn</th>
+            <th scope="col">comprehension</th>
+            <th scope="col">verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="module"><code>billing/InvoiceEngine</code></td>
+            <td>84</td>
+            <td class="grade">opaque</td>
+            <td>write-only</td>
+          </tr>
+          <tr>
+            <td class="module"><code>orders/FulfillmentPipeline</code></td>
+            <td>61</td>
+            <td class="grade">opaque</td>
+            <td>write-only</td>
+          </tr>
+          <tr>
+            <td class="module"><code>integrations/WebhookRouter</code></td>
+            <td>47</td>
+            <td class="grade">thin</td>
+            <td>seam next</td>
+          </tr>
+          <tr>
+            <td class="module"><code>reporting/MetricsAggregator</code></td>
+            <td>38</td>
+            <td class="grade">legible</td>
+            <td>healthy</td>
+          </tr>
+          <tr>
+            <td class="module"><code>notifications/DispatchQueue</code></td>
+            <td>23</td>
+            <td class="grade">thin</td>
+            <td>watch</td>
+          </tr>
+          <tr>
+            <td class="module"><code>core/PricingRules</code></td>
+            <td>12</td>
+            <td class="grade">opaque</td>
+            <td>dormant risk</td>
+          </tr>
+          <tr>
+            <td class="module"><code>auth/SessionManager</code></td>
+            <td>9</td>
+            <td class="grade">legible</td>
+            <td>stable</td>
+          </tr>
+          <tr>
+            <td class="module"><code>legacy/LedgerSync</code></td>
+            <td>4</td>
+            <td class="grade">opaque</td>
+            <td>dormant risk</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>churn &times; comprehension</h2>
+    <p class="axis">across: how often a module changes, low on the left. down: how well anyone still understands it, legible at the top. the corner that matters is bottom-right &mdash; changes constantly, nobody can read it. thats where the incidents come from.</p>
+    <div class="quadrant">
+      <div class="cell">
+        <p class="coord">rarely changes &middot; legible</p>
+        <p>stable. leave it alone. <code>auth/SessionManager</code> lives here.</p>
+      </div>
+      <div class="cell">
+        <p class="coord">changes constantly &middot; legible</p>
+        <p>healthy hot path. keep it this way. <code>reporting/MetricsAggregator</code>.</p>
+      </div>
+      <div class="cell">
+        <p class="coord">rarely changes &middot; opaque</p>
+        <p>dormant risk. dont wake it without tests. <code>core/PricingRules</code>, <code>legacy/LedgerSync</code>.</p>
+      </div>
+      <div class="cell danger">
+        <p class="coord">changes constantly &middot; opaque</p>
+        <p>write-only. <em>this is where your incidents come from.</em> <code>billing/InvoiceEngine</code>, <code>orders/FulfillmentPipeline</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>write-only regions</h2>
+    <p>two modules a human can no longer safely read. both change every week. neither has a test that asserts what it's supposed to do. stabilization starts here.</p>
+
+    <h3><code>billing/InvoiceEngine</code></h3>
+    <p>84 commits last quarter, most of them fixes to previous fixes. the method that decides what a customer owes is 340 lines with eleven nested branches on nullable fields. two of your last three billing incidents originated in one untested branch.</p>
+
+    <h3><code>orders/FulfillmentPipeline</code></h3>
+    <p>a chain of handlers that pass a mutable bag of state between them. no handler documents what it expects to already be set, so every change is a guess about invisible order. the suite is green and asserts nothing about the actual sequence.</p>
+  </section>
+
+  <footer>
+    <p>rasiim kyan &middot; <a href="/">back to the work</a></p>
+  </footer>
+</main>
+</body>
+</html>
