@@ -183,16 +183,16 @@
   <section>
     <p class="kicker">week two</p>
     <h1>legibility map</h1>
-    <p class="who">anonymized, from a real engagement. this is what week two produces.</p>
-    <p>a legibility map answers one question for every part of a system: can a person still reason about this, or has it gone write-only &mdash; code that only ever gets appended to, cus nobody can safely read whats already there.</p>
-    <p>two measurements per module. how often it changes, pulled from the last quarter of git history. and how well anyone still understands it, scored from characterization tests and reading sessions with the people who own it.</p>
+    <p class="who">Anonymized, from a real engagement. This is what week two produces.</p>
+    <p>A legibility map answers one question for every part of a system: can a person still reason about this, or has it gone write-only &mdash; code that only ever gets appended to, because nobody can safely read what's already there.</p>
+    <p>Two measurements per module. How often it changes, pulled from the last quarter of git history. And how well anyone still understands it, scored from characterization tests and reading sessions with the people who own it.</p>
   </section>
 
   <section>
     <h2>module inventory</h2>
     <div class="table-scroll">
       <table>
-        <caption>eight highest-traffic modules. churn is commits touching the module last quarter. comprehension is a three-level read: legible, thin, or opaque.</caption>
+        <caption>Eight highest-traffic modules. Churn is commits touching the module last quarter. Comprehension is a three-level read: legible, thin, or opaque.</caption>
         <thead>
           <tr>
             <th scope="col">module</th>
@@ -257,40 +257,40 @@
 
   <section>
     <h2>churn &times; comprehension</h2>
-    <p class="axis">across: how often a module changes, low on the left. down: how well anyone still understands it, legible at the top. the corner that matters is bottom-right &mdash; changes constantly, nobody can read it. thats where the incidents come from.</p>
+    <p class="axis">Across: how often a module changes, low on the left. Down: how well anyone still understands it, legible at the top. The corner that matters is bottom-right &mdash; changes constantly, nobody can read it. That's where the incidents come from.</p>
     <div class="quadrant">
       <div class="cell">
         <p class="coord">rarely changes &middot; legible</p>
-        <p>stable. leave it alone. <code>auth/SessionManager</code> lives here.</p>
+        <p>Stable. Leave it alone. <code>auth/SessionManager</code> lives here.</p>
       </div>
       <div class="cell">
         <p class="coord">changes constantly &middot; legible</p>
-        <p>healthy hot path. keep it this way. <code>reporting/MetricsAggregator</code>.</p>
+        <p>Healthy hot path. Keep it this way. <code>reporting/MetricsAggregator</code>.</p>
       </div>
       <div class="cell">
         <p class="coord">rarely changes &middot; opaque</p>
-        <p>dormant risk. dont wake it without tests. <code>core/PricingRules</code>, <code>legacy/LedgerSync</code>.</p>
+        <p>Dormant risk. Don't wake it without tests. <code>core/PricingRules</code>, <code>legacy/LedgerSync</code>.</p>
       </div>
       <div class="cell danger">
         <p class="coord">changes constantly &middot; opaque</p>
-        <p>write-only. <em>this is where your incidents come from.</em> <code>billing/InvoiceEngine</code>, <code>orders/FulfillmentPipeline</code>.</p>
+        <p>Write-only. <em>This is where your incidents come from.</em> <code>billing/InvoiceEngine</code>, <code>orders/FulfillmentPipeline</code>.</p>
       </div>
     </div>
   </section>
 
   <section>
     <h2>write-only regions</h2>
-    <p>two modules a human can no longer safely read. both change every week. neither has a test that asserts what it's supposed to do. stabilization starts here.</p>
+    <p>Two modules a human can no longer safely read. Both change every week. Neither has a test that asserts what it's supposed to do. Stabilization starts here.</p>
 
     <h3><code>billing/InvoiceEngine</code></h3>
-    <p>84 commits last quarter, most of them fixes to previous fixes. the method that decides what a customer owes is 340 lines with eleven nested branches on nullable fields. two of your last three billing incidents originated in one untested branch.</p>
+    <p>84 commits last quarter, most of them fixes to previous fixes. The method that decides what a customer owes is 340 lines with eleven nested branches on nullable fields. Two of your last three billing incidents originated in one untested branch.</p>
 
     <h3><code>orders/FulfillmentPipeline</code></h3>
-    <p>a chain of handlers that pass a mutable bag of state between them. no handler documents what it expects to already be set, so every change is a guess about invisible order. the suite is green and asserts nothing about the actual sequence.</p>
+    <p>A chain of handlers that pass a mutable bag of state between them. No handler documents what it expects to already be set, so every change is a guess about invisible order. The suite is green and asserts nothing about the actual sequence.</p>
   </section>
 
   <footer>
-    <p>rasiim kyan &middot; <a href="/">back to the work</a></p>
+    <p>Wallace Drew &middot; <a href="/">back to the work</a></p>
   </footer>
 </main>
 </body>
