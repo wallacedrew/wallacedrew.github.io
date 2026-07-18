@@ -1,234 +1,477 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Codebase Rescue &amp; Agent Governance</title>
   <style>
     :root {
-      --paper: #FAFAF9;
-      --ink: #111111;
-      --muted: #6B6B68;
-      --rule: #E5E5E3;
-      --measure: 34rem;
+      --ink: #000;
+      --paper: #fff;
+      --rule: 0.375rem;
+      --red: #C94040;
+      --red-bg: #FDF1F1;
+      --black: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
-    * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: clamp(16px, 14px + 0.7vw, 24px); }
+    html, body { background: var(--paper); color: var(--ink); }
+
     body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      font-size: 1.25rem;
-      line-height: 1.6;
+      font-family: var(--black);
+      font-weight: 900;
+      line-height: 1;
       -webkit-font-smoothing: antialiased;
+      padding: 1.5rem 1rem 3rem;
     }
-    main {
-      max-width: var(--measure);
-      margin: 0 auto;
-      padding: 5rem 1.5rem 6rem;
-      border-left: 1px solid var(--rule);
+
+    @media (min-width: 720px) {
+      body { padding: 4rem 1.5rem; }
     }
-    @media (min-width: 60rem) {
-      main {
-        max-width: calc(var(--measure) + 4rem);
-        padding-left: 4rem;
-      }
-    }
-    section { margin: 0 0 5rem; }
-    section:last-of-type { margin-bottom: 0; }
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      font-size: 2.25rem;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
-      margin: 0 0 1.25rem;
-      max-width: 28rem;
-    }
-    @media (min-width: 40rem) {
-      h1 { font-size: 3rem; }
-    }
-    h2 {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+
+    main { max-width: 32rem; margin: 0 auto; }
+    section, .preamble, .primary, .secondary { margin-bottom: 1.5rem; }
+
+    .label {
+      display: block;
+      font-family: var(--black);
+      font-size: 0.75rem;
+      letter-spacing: 0.1875rem;
       text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 1.5rem;
     }
-    p { margin: 0 0 1.25rem; max-width: var(--measure); }
-    p:last-child { margin-bottom: 0; }
-    .who {
-      color: var(--muted);
-      font-size: 1.0625rem;
-      margin: 0;
+    .num {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      letter-spacing: 0.0625rem;
     }
-    .lead { font-size: 1.375rem; }
-    strong { font-weight: 600; }
-    em {
-      font-style: normal;
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 1px;
+
+    /* ─── ID card ──────────────────────────────────── */
+    .card {
+      border: var(--rule) solid var(--ink);
+      padding: 1.375rem 1.25rem 1.25rem;
     }
-    ul {
-      margin: 0 0 1.25rem;
-      padding: 0;
-      list-style: none;
+    .name {
+      font-family: var(--black);
+      font-size: 2.25rem;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
     }
-    li {
-      margin-bottom: 0.75rem;
-      padding-left: 1.25rem;
-      text-indent: -1.25rem;
+    .card hr {
+      border: 0;
+      border-top: 0.1875rem solid var(--ink);
+      margin: 1.125rem 0 0.875rem;
     }
-    li::before {
-      content: "— ";
-      color: var(--muted);
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
     }
-    .phase {
-      margin-bottom: 2.5rem;
+    .meta-row + .meta-row { margin-top: 0.5rem; }
+    .meta-row .num { font-size: 0.75rem; }
+
+    /* ─── Headline ─────────────────────────────────── */
+    .tagline {
+      border: var(--rule) solid var(--ink);
+      padding: 1.5rem 1.25rem 1.625rem;
     }
-    .phase:last-child { margin-bottom: 0; }
-    .phase-weeks {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.0625rem;
-      color: var(--muted);
-      margin: 0 0 0.375rem;
+    .tagline .label { margin-bottom: 0.875rem; }
+    .tagline h1 {
+      font-family: var(--black);
+      font-size: 1.875rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
     }
-    .phase-name {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.5rem;
+    @media (min-width: 720px) {
+      .tagline h1 { font-size: 2.375rem; }
+    }
+
+    /* ─── Situation ────────────────────────────────── */
+    .bio {
+      border: var(--rule) solid var(--ink);
+      padding: 1rem 1.125rem 1.125rem;
+    }
+    .bio .label { margin-bottom: 0.625rem; }
+    .bio p {
+      font-family: var(--mono);
       font-weight: 400;
-      margin: 0 0 0.625rem;
+      font-size: 1.0625rem;
+      line-height: 1.6;
     }
-    .refuse li::before {
-      content: "\00d7 ";
-      color: var(--muted);
+    .bio p + p { margin-top: 0.75rem; }
+
+    /* ─── Cost ─────────────────────────────────────── */
+    .cost {
+      border: var(--rule) solid var(--ink);
+      padding: 1rem 1.125rem 1.125rem;
     }
-    a {
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 1px;
+    .cost .label { margin-bottom: 0.5rem; }
+    .cost .meta-row {
+      padding: 0.6875rem 0;
+      border-top: 0.125rem solid var(--ink);
     }
-    a:hover { color: var(--muted); border-color: var(--muted); }
-    a:focus-visible {
-      outline: 2px solid var(--ink);
-      outline-offset: 3px;
-      border-bottom-color: transparent;
+    .cost .k {
+      font-family: var(--black);
+      font-size: 0.9375rem;
+      letter-spacing: 0.0625rem;
+      text-transform: uppercase;
     }
-    .cta {
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      padding: 3rem 0;
+    .cost .v {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      white-space: nowrap;
     }
-    .cta-terms {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.5rem;
-      margin: 0 0 1.25rem;
+    .cost .punch {
+      margin-top: 0.875rem;
+      padding-top: 0.9375rem;
+      border-top: 0.1875rem solid var(--ink);
+      font-family: var(--black);
+      font-size: 1.1875rem;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
     }
-    .button {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.875rem 1.75rem;
+
+    /* ─── Engagement ───────────────────────────────── */
+    .caps {
+      border-top: var(--rule) solid var(--ink);
+      border-bottom: var(--rule) solid var(--ink);
+    }
+    .caps-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.75rem 0.25rem;
+      border-bottom: 0.1875rem solid var(--ink);
+    }
+    .caps ol { list-style: none; counter-reset: cap; }
+    .caps li {
+      counter-increment: cap;
+      display: grid;
+      grid-template-columns: 1.625rem 1fr;
+      column-gap: 0.75rem;
+      row-gap: 0.375rem;
+      padding: 1rem 0.25rem;
+    }
+    .caps li + li { border-top: 0.125rem solid var(--ink); }
+    .caps li::before {
+      content: counter(cap, decimal-leading-zero);
+      grid-row: 1; grid-column: 1;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      letter-spacing: 0.0625rem;
+      align-self: baseline;
+      padding-top: 0.125rem;
+    }
+    .cap-head {
+      grid-row: 1; grid-column: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    .cap-title {
+      font-family: var(--black);
+      font-size: 1.0625rem;
+      letter-spacing: 0.125rem;
+      text-transform: uppercase;
+    }
+    .cap-week {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.0625rem;
+      white-space: nowrap;
+    }
+    .cap-desc {
+      grid-row: 2; grid-column: 2;
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 1.0625rem;
+      line-height: 1.55;
+    }
+
+    /* ─── Turn down ────────────────────────────────── */
+    .refuse { border: var(--rule) solid var(--ink); }
+    .refuse-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.75rem 0.875rem;
+      border-bottom: 0.1875rem solid var(--ink);
+    }
+    .refuse ul { list-style: none; }
+    .refuse li {
+      display: flex;
+      gap: 0.625rem;
+      align-items: baseline;
+      padding: 0.75rem 0.875rem;
+      background: var(--red-bg);
+      color: var(--red);
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1.0625rem;
+    }
+    .refuse li + li { border-top: 0.125rem solid var(--ink); }
+    .refuse li .x { flex-shrink: 0; }
+    .refuse .foot {
+      padding: 0.875rem;
+      border-top: 0.1875rem solid var(--ink);
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    /* ─── Kicker (inverted) ────────────────────────── */
+    .kicker {
       background: var(--ink);
       color: var(--paper);
-      font-size: 1.0625rem;
-      border: 1px solid var(--ink);
-      border-radius: 0;
+      border: var(--rule) solid var(--ink);
+      padding: 1.5rem 1.25rem 1.625rem;
     }
-    .button:hover {
+    .kicker .label { margin-bottom: 0.875rem; }
+    .kicker p {
+      font-family: var(--black);
+      font-weight: 900;
+      font-size: 1.5rem;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* ─── CTA ──────────────────────────────────────── */
+    .preamble {
+      display: block;
+      padding: 0.875rem 0;
+      border-top: 0.1875rem solid var(--ink);
+      border-bottom: 0.1875rem solid var(--ink);
+      margin-bottom: 0.875rem;
+      font-family: var(--black);
+      font-size: 0.875rem;
+      letter-spacing: 0.1875rem;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+    .primary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.125rem;
+      width: 100%;
+      padding: 1.375rem 1.25rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: var(--rule) solid var(--ink);
+      font-family: var(--black);
+      text-decoration: none;
+      transition: transform 0.06s ease;
+    }
+    .primary .copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      min-width: 0;
+    }
+    .primary .lead {
+      font-size: 1.75rem;
+      letter-spacing: 0.0625rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .primary .addr {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 0.90625rem;
+      letter-spacing: 0.03125rem;
+      text-transform: lowercase;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .primary .arrow {
+      font-size: 2.25rem;
+      line-height: 1;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .primary:active,
+    .secondary a:active { transform: translateY(1px); }
+    .primary:focus-visible,
+    .secondary a:focus-visible {
+      outline: 0.1875rem solid var(--ink);
+      outline-offset: 0.25rem;
+    }
+
+    /* ─── Secondary / proof ────────────────────────── */
+    .secondary {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .secondary a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1.125rem;
+      border: 0.1875rem solid var(--ink);
       background: var(--paper);
       color: var(--ink);
+      text-decoration: none;
+      font-family: var(--black);
+      transition: transform 0.06s ease;
     }
-    footer {
-      margin-top: 5rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--rule);
+    .secondary a .lead {
       font-size: 1rem;
-      color: var(--muted);
+      letter-spacing: 0.15625rem;
+      text-transform: uppercase;
     }
-    footer a { color: var(--muted); border-color: var(--rule); }
+    .secondary a .handle {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 0.90625rem;
+      letter-spacing: 0.03125rem;
+      text-transform: lowercase;
+    }
+
+    /* ─── Footer ───────────────────────────────────── */
+    footer {
+      margin-top: 1.75rem;
+      padding-top: 0.875rem;
+      border-top: 0.1875rem solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+      font-family: var(--mono);
+      font-size: 0.90625rem;
+      letter-spacing: 0.03125rem;
+    }
+    footer a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.0625rem;
+      border-bottom: 0.125rem solid var(--ink);
+      padding-bottom: 0.0625rem;
+    }
   </style>
 </head>
 <body>
-<main>
-  <section>
-    <h1>Your code works. Nobody knows why.</h1>
-    <p class="who">Wallace Drew &middot; fractional staff engineer</p>
-  </section>
+  <main>
 
-  <section>
-    <h2>the room</h2>
-    <p class="lead">You put coding agents on the team about a year ago. Output tripled. Review didn't.</p>
-    <p>Now nobody can say what the system does. The tests pass and assert nothing. Every change breaks something nobody saw coming.</p>
-    <p>Your best engineers are quietly interviewing.</p>
-  </section>
+    <section class="card" aria-label="Identification">
+      <p class="name">Wallace<br />Drew</p>
+      <hr />
+      <div class="meta-row">
+        <span class="label">Role</span>
+        <span class="label">Fractional Staff Eng</span>
+      </div>
+      <div class="meta-row">
+        <span class="label">Scope</span>
+        <span class="num">LEGACY / AGENTIC / GOVERNANCE</span>
+      </div>
+    </section>
 
-  <section>
-    <h2>what it costs to wait</h2>
-    <p>The rewrite talk starts around month twenty. That's two million dollars and a year of shipping nothing.</p>
-    <p>A staff engineer who could stop it costs <strong>$350k fully loaded</strong>. You won't have one seated for four months.</p>
-    <p>I'm cheaper. I'm here in a week. And <em>I leave</em>.</p>
-  </section>
+    <section class="tagline" aria-label="Positioning">
+      <span class="label">The Room</span>
+      <h1>Your Code Works.<br />Nobody Knows Why.</h1>
+    </section>
 
-  <section>
-    <h2>the engagement</h2>
-    <div class="phase">
-      <p class="phase-weeks">weeks 1&ndash;2</p>
-      <h3 class="phase-name">diagnosis</h3>
-      <p>Characterization tests on the highest-churn, least-understood modules. What the system actually does, not what the docs say.</p>
-      <p><strong>You get:</strong> a legibility map. What a human can still read, and what has gone write-only.</p>
-    </div>
-    <div class="phase">
-      <p class="phase-weeks">weeks 3&ndash;8</p>
-      <h3 class="phase-name">stabilization</h3>
-      <p>Seams, not rewrites. Boundaries around the worst parts. Real assertions under the fake suite. You can change one thing without breaking three.</p>
-    </div>
-    <div class="phase">
-      <p class="phase-weeks">weeks 9&ndash;16</p>
-      <h3 class="phase-name">governance</h3>
-      <p>This is the real work. CLAUDE.md as the rulebook. Fitness functions in CI. A delegability rating on every module. A review rubric that catches problems before merge.</p>
+    <section class="bio" aria-label="Situation">
+      <span class="label">Situation</span>
+      <p>You put coding agents on the team about a year ago. Output tripled. Review didn't. Now nobody can say what the system does. The tests pass and assert nothing. Every change breaks something nobody saw coming.</p>
+      <p>Your best engineers are quietly interviewing.</p>
+    </section>
+
+    <section class="cost" aria-label="What it costs to wait">
+      <span class="label">What It Costs To Wait</span>
+      <div class="meta-row"><span class="k">Rewrite talk</span><span class="v">~ MONTH 20</span></div>
+      <div class="meta-row"><span class="k">The bill</span><span class="v">$2,000,000 &middot; 1 YR</span></div>
+      <div class="meta-row"><span class="k">Staff hire</span><span class="v">$350K &middot; 4 MO OUT</span></div>
+      <p class="punch">I'm cheaper. I'm here in a week. And I leave.</p>
+    </section>
+
+    <section class="caps" aria-label="The engagement">
+      <div class="caps-head">
+        <span class="label">The Engagement</span>
+        <span class="num">04</span>
+      </div>
+      <ol>
+        <li>
+          <div class="cap-head"><span class="cap-title">Diagnosis</span><span class="cap-week">WK 1&ndash;2</span></div>
+          <p class="cap-desc">Characterization tests on the highest-churn, least-understood modules. You get a legibility map: what a human can still read, and what has gone write-only.</p>
+        </li>
+        <li>
+          <div class="cap-head"><span class="cap-title">Stabilization</span><span class="cap-week">WK 3&ndash;8</span></div>
+          <p class="cap-desc">Seams, not rewrites. Boundaries around the worst parts. Real assertions under the fake suite. Change one thing without breaking three.</p>
+        </li>
+        <li>
+          <div class="cap-head"><span class="cap-title">Governance</span><span class="cap-week">WK 9&ndash;16</span></div>
+          <p class="cap-desc">CLAUDE.md as the rulebook. Fitness functions in CI. A delegability rating on every module. A review rubric that catches problems before merge.</p>
+        </li>
+        <li>
+          <div class="cap-head"><span class="cap-title">Transfer</span><span class="cap-week">WK 17&ndash;24</span></div>
+          <p class="cap-desc">Your engineers own it. I go. The retainer turns into advisory or ends clean.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="refuse" aria-label="What I turn down">
+      <div class="refuse-head">
+        <span class="label">What I Turn Down</span>
+        <span class="num">&mdash;</span>
+      </div>
+      <ul>
+        <li><span class="x" aria-hidden="true">&times;</span><span>Greenfield</span></li>
+        <li><span class="x" aria-hidden="true">&times;</span><span>Staff augmentation</span></li>
+        <li><span class="x" aria-hidden="true">&times;</span><span>"Just help us ship faster"</span></li>
+        <li><span class="x" aria-hidden="true">&times;</span><span>Anything measured only in output</span></li>
+      </ul>
+      <p class="foot">None of that is wrong. It's just not the work I take.</p>
+    </section>
+
+    <section class="kicker" aria-label="Governance">
+      <span class="label">Governance</span>
       <p>This is what keeps it from happening again.</p>
-    </div>
-    <div class="phase">
-      <p class="phase-weeks">weeks 17&ndash;24</p>
-      <h3 class="phase-name">transfer</h3>
-      <p>Your engineers own it. I go. The retainer turns into advisory or ends clean.</p>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>what i turn down</h2>
-    <ul class="refuse">
-      <li>Greenfield</li>
-      <li>Staff augmentation</li>
-      <li>"Just help us ship faster"</li>
-      <li>Anything measured only in output</li>
-    </ul>
-    <p>None of that is wrong. It's just not the work I take.</p>
-  </section>
+    <span class="preamble">Start With The Diagnosis &middot; Two Weeks &middot; You Keep The Map Either Way</span>
 
-  <section>
-    <h2>proof of work</h2>
-    <p>No logos. Just the thinking.</p>
-    <ul>
-      <li><a href="https://refactoringintheloop.com">refactoringintheloop.com</a> &mdash; the whole catalog. Fowler smells and refactorings, Kerievsky paths, GoF patterns, each one rated for what an agent can be trusted to do.</li>
-      <li><a href="/legibility-map">a legibility map</a> &mdash; anonymized, from a real job. This is what week two produces.</li>
-    </ul>
-  </section>
+    <a class="primary" href="mailto:contact@refactorplug.com?subject=diagnosis">
+      <span class="copy">
+        <span class="lead">Book The Diagnosis</span>
+        <span class="addr">contact@refactorplug.com</span>
+      </span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
 
-  <section class="cta">
-    <h2>start with the diagnosis</h2>
-    <p class="cta-terms">Two weeks. You keep the map either way.</p>
-    <p>Two weeks tells you what's actually in there. Want the rest, we talk. Don't, you still know where you stand and you've got the artifact to show your board.</p>
-    <p>Two clients at a time, six months each. The diagnosis says if you're one of them.</p>
-    <p><a class="button" href="mailto:contact@refactorplug.com?subject=diagnosis">book the diagnosis</a></p>
-  </section>
+    <nav class="secondary" aria-label="Proof of work">
+      <a href="/legibility-map">
+        <span class="lead">Legibility Map</span>
+        <span class="handle">specimen &middot; week two</span>
+      </a>
+      <a href="https://refactoringintheloop.com" target="_blank" rel="noopener">
+        <span class="lead">The Catalog</span>
+        <span class="handle">refactoringintheloop.com</span>
+      </a>
+    </nav>
 
-  <footer>
-    <p>Wallace Drew &middot; twenty years of XP, refactoring, and evolutionary design &middot; <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a></p>
-  </footer>
-</main>
+    <footer>
+      <span>&copy; 2026 Wallace Drew &middot; 20 YR XP</span>
+      <a href="mailto:contact@refactorplug.com">contact@refactorplug.com</a>
+    </footer>
+
+  </main>
 </body>
 </html>
